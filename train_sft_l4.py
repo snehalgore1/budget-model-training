@@ -45,8 +45,8 @@ CONFIG = {
     'log_dir': 'logs',
 
     # Training (L4 24GB optimized)
-    'batch_size': 4,              # Small batch for 24GB
-    'grad_accum_steps': 8,        # Effective batch = 32
+    'batch_size': 2,              # Smaller batch for safety
+    'grad_accum_steps': 16,       # Effective batch = 32
     'max_length': 512,
     'num_epochs': 3,
     'learning_rate': 2e-4,
@@ -190,8 +190,8 @@ class BudgetRegressionModel(nn.Module):
 
         self.base_model = AutoModelForCausalLM.from_pretrained(
             config['model_name'],
-            torch_dtype=torch.bfloat16 if config['mixed_precision'] else torch.float32,
-            device_map='auto'
+            torch_dtype=torch.bfloat16,
+            low_cpu_mem_usage=True
         )
         print(f"✓ Model loaded (hidden size: {self.hidden_size})")
 
@@ -420,6 +420,17 @@ def main():
     print(f"{'='*70}")
 
     model = BudgetRegressionModel(CONFIG)
+    
+    # Move model to GPU
+    device = CONFIG['device']
+    model = model.to(device)
+    
+    # Enable gradient checkpointing to save memory
+    if hasattr(model.base_model.base_model, 'gradient_checkpointing_enable'):
+        model.base_model.base_model.gradient_checkpointing_enable()
+        print("✓ Gradient checkpointing enabled")
+    
+    print(f"✓ Model moved to {device}")
 
     # Setup optimizer and scheduler
     print(f"\n{'='*70}")
