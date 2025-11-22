@@ -24,6 +24,19 @@ This project trains a **Budget Model** that learns to predict the optimal token 
 - **Comprehensive Metrics**: MAE, RMSE, MAPE, underrun/overrun rates
 
 ---
+## 📊 Dataset
+
+Download the training data from Google Drive:
+
+**Link:** [Download Data (143 MB)](https://drive.google.com/your-share-link-here)
+
+After downloading, extract to `data/` folder:
+```bash
+mkdir data
+# Extract your downloaded files to data/
+# Should have: data/train.jsonl, data/val.jsonl, data/test.jsonl
+```
+---
 
 ## 📊 Architecture
 
