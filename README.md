@@ -28,7 +28,7 @@ This project trains a **Budget Model** that learns to predict the optimal token 
 
 Download the training data from Google Drive:
 
-**Link:** [Download Data (143 MB)](https://drive.google.com/your-share-link-here)
+**Link:** [Download Data (143 MB)](https://drive.google.com/drive/folders/1RdtB2rJopkg_ZcDrJUhLoJ79KRBWCGx7?usp=drive_link)
 
 After downloading, extract to `data/` folder:
 ```bash
